@@ -2,3 +2,5 @@ venv/
 models/
 tests_of_models/
 .pytest_cache/
+.idea/
+__pychache__/

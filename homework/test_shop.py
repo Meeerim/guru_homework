@@ -33,13 +33,8 @@ class TestProducts:
     def test_product_buy_more_than_available(self, product):
         # TODO напишите проверки на метод buy,
         #  которые ожидают ошибку ValueError при попытке купить больше, чем есть в наличии
-        assert product.quantity > 0
-        try:
+        with pytest.raises(ValueError):
             product.buy(product.quantity + 1)
-            assert False
-        except ValueError:
-            pass
-        assert product.quantity > 0
 
 
 @pytest.fixture()
@@ -56,16 +51,21 @@ class TestCart:
     """
 
     def test_add_product(self, cart, product):
-        cart.add_product(product)
-        assert product in cart.products
-        assert len(cart.products) >= 0
+        cart.add_product(product, 10)
+        assert cart.products == {product: 10}
+        cart.add_product(product, 10)
+        assert cart.products == {product: 20}
 
     def test_remove_product(self, cart, product):
-        cart.add_product(product)
-        cart.remove_product(product)
-        assert product not in cart.products
-        assert len(cart.products) >= 0
-
+        cart.add_product(product, 15)
+        cart.remove_product(product, 15)
+        assert cart.products[product] == 0
+        cart.add_product(product, 10)
+        cart.remove_product(product, 15)
+        assert cart.products == {}
+        cart.add_product(product, 4)
+        cart.remove_product(product, 2)
+        assert cart.products[product] == 2
 
     def test_clear_product(self, cart, product):
         cart.add_product(product)
@@ -73,16 +73,12 @@ class TestCart:
         assert len(cart.products) == 0
 
     def test_buy_product(self, cart, product):
-        cart.add_product(product)
+        cart.add_product(product, 10)
         cart.buy()
-        assert product.check_quantity(quantity=10)
+        assert cart.products == {}
+        assert product.quantity == 990
 
-    def test_negative_buy_product(self, cart, product):
-        cart.add_product(product)
-        cart.buy()
-        if product.quantity < 0:
-            try:
-                product.buy(product.quantity - 1)
-                assert False
-            except ValueError:
-                pass
+    def test_buy_with_error(self, cart, product):
+        cart.add_product(product, 1010)
+        with pytest.raises(ValueError):
+            cart.buy()

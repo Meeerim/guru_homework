@@ -69,9 +69,6 @@ class Cart:
         else:
             self.products[product] -= remove_count
 
-
-
-
     def clear(self):
         self.products.clear()
 
@@ -88,6 +85,5 @@ class Cart:
         В этом случае нужно выбросить исключение ValueError
         """
         for product in self.products:
-            if not product.check_quantity(product.quantity):
-                raise ValueError("Недостаточное количество продукта")
+            product.buy(self.products[product])
         self.products.clear()
