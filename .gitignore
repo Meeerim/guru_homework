@@ -1,0 +1,7 @@
+.pytest_cache/
+homework.egg-info/
+venv/
+readme.md
+test_parametrize.py
+test_simple.py
+pyproject.toml
