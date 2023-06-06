@@ -2,6 +2,6 @@
 homework.egg-info/
 venv/
 readme.md
-test_parametrize.py
-test_simple.py
-pyproject.toml
+test_parametrize.py/
+test_simple.py/
+pyproject.toml/
