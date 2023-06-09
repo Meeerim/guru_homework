@@ -7,7 +7,7 @@ from selenium import webdriver
 from selene.support.shared import browser
 
 
-@pytest.fixture(params=[(1920, 1080), (1600, 1024)])
+@pytest.fixture(params=[(1920, 1080), (1242, 2688)])
 def browser_desktop_setup(request):
     chrome_browser = webdriver.ChromeOptions()
     browser.config.driver_options = chrome_browser
@@ -23,7 +23,7 @@ def test_github_desktop(browser_desktop_setup):
     browser.element('a.HeaderMenu-link--sign-in').click()
 
 
-@pytest.fixture(params=[(1284, 2778), (1242, 2688), (828, 1792)])
+@pytest.fixture(params=[(360, 640), (414, 896), (360, 800)])
 def mobile_browser_setup(request):
     chrome_browser = webdriver.ChromeOptions()
     browser.config.driver_options = chrome_browser
